@@ -1,0 +1,47 @@
+{
+  "TEST_1": {
+    "id": "TEST_1",
+    "checker": "oneOf",
+    "text": "2 + 2 (the hint should be 'Evil')",
+    "answers": [
+      "4"
+    ],
+    "case_sensitive": false,
+    "possible_hints": [
+      "Evil",
+      "Lawful",
+      "Neutral"
+    ],
+    "hint": "Evil"
+  },
+  "TEST_2": {
+    "id": "TEST_2",
+    "checker": "oneOf",
+    "case_sensitive": true,
+    "text": "В лесу родилась ******?",
+    "answers": [
+      "ёлочка",
+      "елочка"
+    ],
+    "possible_hints": [
+      "Good",
+      "Evil",
+      "Neutral"
+    ],
+    "hint": "Good"
+  },
+  "TEST_3": {
+    "id": "TEST_3",
+    "checker": "custom",
+    "checker_code": "x.isdigit() and int(x)%2==0",
+    "case_sensitive": false,
+    "checker_variable": "x",
+    "text": "Введите любое чётное число",
+    "possible_hints": [
+      "Манул",
+      "Не манул",
+      "Слонопотам"
+    ],
+    "hint": "Не манул"
+  }
+}

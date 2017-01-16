@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Index page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <script>
+        function callback(event) {
+            evidence_id = event.target.id.replace("feedback_ev_", "");
+            var input_id = "input_ev_" + evidence_id;
+            var output_id = "output_ev_" + evidence_id;
+            var attempt = $("input#" + input_id).val();
+            $.ajax("/api/evidence/feedback/" + evidence_id + "/" + attempt,
+                {
+                    "success": function (a, b, c) {
+                        $("div#" + output_id).text(attempt + ":" + a);
+                    }
+                });
+        }
+    </script>
+</head>
+<body>
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Question</th>
+        <th>Values range</th>
+        <th>Case sensitive</th>
+        <th>Your attempt</th>
+        <th>Click here</th>
+        <th>Feedback</th>
+    </tr>
+    {% for key in keys %}
+        {% with ev = evidences[key] %}
+            <tr>
+                <td>{{ ev["id"] }}</td>
+                <td>{{ ev["text"] }}</td>
+                <td>{{ ev["possible_hints"] }}</td>
+                <td>{{ ev["case_sensitive"] if "case_sensitive" in ev else True }}</td>
+                <td>
+                    <input type="text" id=input_ev_{{ ev["id"] }} title="Your answer">
+                </td>
+                <td>
+                    <button class="feedback" type="button" id=feedback_ev_{{ ev["id"] }}
+                            onclick=callback(event)>
+                        Check
+                    </button>
+                </td>
+                <td>
+                    <div id="output_ev_{{ ev["id"] }}">Unrequested yet</div>
+                </td>
+            </tr>
+        {% endwith %}
+    {% endfor %}
+</table>
+
+</body>
+</html>

@@ -37,11 +37,17 @@
         {% with ev = evidences[key] %}
             <tr>
                 <td>{{ ev["id"] }}</td>
-                <td>{{ ev["text"] }}</td>
+                <td>
+                    <pre>{{ ev["text"] }}</pre>
+                    {% if "link" in ev %}
+                        <a href="{{ ev["link"] }}">ССЫЛКА</a>
+                    {% endif %}
+                </td>
+
                 <td>{{ ev["possible_hints"] }}</td>
                 <td>{{ ev["case_sensitive"] if "case_sensitive" in ev else True }}</td>
                 <td>
-                    <input type="text" id=input_ev_{{ ev["id"] }} title="Your answer">
+                    <input type=" text" id=input_ev_{{ ev["id"] }} title="Your answer">
                 </td>
                 <td>
                     <button class="feedback" type="button" id=feedback_ev_{{ ev["id"] }}

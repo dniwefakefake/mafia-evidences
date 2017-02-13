@@ -29,9 +29,9 @@ def check_evidence(id, evidence, attempt):
         evidence["case_sensitive"] = True
 
     if evidence["checker"] == "oneOf":
-        if not evidence["case_sensitive"] and attempt in evidence["answers"]:
+        if evidence["case_sensitive"] and attempt in evidence["answers"]:
             return evidence["hint"]
-        elif evidence["case_sensitive"] and attempt.lower() in map(str.lower, evidence["answers"]):
+        elif not evidence["case_sensitive"] and attempt.lower() in map(str.lower, evidence["answers"]):
             return evidence["hint"]
     elif evidence["checker"] == "custom":
         checker = build_custom_checker(evidence)
